@@ -2,5 +2,5 @@
 User-agent: *
 Allow: /
 
-# Đường dẫn đến file Sitemap trên Vercel
+# Đường dẫn đến file Sitemap trên FirebaseApp
 Sitemap: https://briannguyen0608.firebaseapp.com/sitemap.xml
