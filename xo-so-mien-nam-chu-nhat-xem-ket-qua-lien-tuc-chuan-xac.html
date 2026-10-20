@@ -84,6 +84,7 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 15px;
+            padding-top: 10px;
             padding-bottom: 15px;
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
@@ -289,22 +290,7 @@
 
     <main class="container">
         <div class="article-card">
-            <!-- Khối Meta Dữ liệu bài viết -->
-            <div class="article-meta">
-                <span class="meta-item meta-author">
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                    Tác giả: Brian Nguyen
-                </span>
-                <span class="meta-item">
-                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
-                    Ngày đăng: 20/10/2026
-                </span>
-                <span class="meta-item">
-                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                    Lượt xem: 18,420
-                </span>
-            </div>
-
+            
             <!-- Nội dung bài viết chi tiết -->
             <article style="font-family: Arial, sans-serif; color: #333333; line-height: 1.6; max-width: 800px; margin: 0 auto;">
 
@@ -312,6 +298,22 @@
                 <h1 style="color: #c0392b; font-size: 24px; font-weight: bold; margin-bottom: 12px; border-bottom: 2px solid #c0392b; padding-bottom: 8px;">
                     Xổ số miền Nam Chủ nhật: Xem kết quả liên tục chuẩn xác
                 </h1>
+
+                <!-- Khối Meta Dữ liệu bài viết nằm ngay dưới tiêu đề -->
+                <div class="article-meta">
+                    <span class="meta-item meta-author">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        Tác giả: Brian Nguyen
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                        Ngày đăng: 20/10/2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        Lượt xem: 18,420
+                    </span>
+                </div>
 
                 <!-- Sapo -->
                 <div style="background-color: #f8f9fa; border-left: 4px solid #c0392b; padding: 12px 15px; font-size: 15px; font-weight: 500; color: #444444; margin-bottom: 20px; border-radius: 0 4px 4px 0;">
