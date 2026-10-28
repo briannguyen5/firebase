@@ -1,31 +1,112 @@
-name: Generate Sitemap Automatically
+name: Auto Generate Sitemap
+
 
 on:
   push:
     branches:
-      - main # Hoặc 'master' tùy tên branch chính của bạn
-    paths:
-      - '**.html' # Chỉ chạy khi có thêm hoặc sửa file .html
+      - main
+  workflow_dispatch:
+
+
+permissions:
+  contents: write
+
 
 jobs:
-  sitemap_job:
+  sitemap:
     runs-on: ubuntu-latest
+
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
         with:
-          node-version: '18'
+          fetch-depth: 0
 
-      - name: Run Sitemap Generator
-        run: node generate-sitemap.js
 
-      - name: Commit and Push sitemap.xml
+      - name: Generate sitemap.xml
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          python3 <<'PY'
+          from pathlib import Path
+          from xml.sax.saxutils import escape
+          import subprocess
+
+
+          base_url = "https://briannguyen0608.firebaseapp.com"
+          excluded = {"404.html"}
+
+
+          lines = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+          ]
+
+
+          files = sorted(Path(".").rglob("*.html"))
+
+
+          for path in files:
+              if any(part.startswith(".") for part in path.parts):
+                  continue
+
+
+              if path.name in excluded:
+                  continue
+
+
+              relative = path.as_posix()
+
+
+              if relative == "index.html":
+                  url = base_url + "/"
+              elif path.name == "index.html":
+                  url = base_url + "/" + str(path.parent).replace("\\", "/") + "/"
+              else:
+                  url = base_url + "/" + relative
+
+
+              result = subprocess.run(
+                  ["git", "log", "-1", "--format=%cs", "--", relative],
+                  capture_output=True,
+                  text=True,
+                  check=True
+              )
+
+
+              lastmod = result.stdout.strip() or "2026-10-28"
+
+
+              lines.extend([
+                  "  <url>",
+                  f"    <loc>{escape(url)}</loc>",
+                  f"    <lastmod>{lastmod}</lastmod>",
+                  "  </url>"
+              ])
+
+
+          lines.append("</urlset>")
+
+
+          Path("sitemap.xml").write_text(
+              "\n".join(lines) + "\n",
+              encoding="utf-8"
+          )
+
+
+          print(f"Generated {len(files)} HTML file entries")
+          PY
+
+
+      - name: Commit updated sitemap
+        run: |
           git add sitemap.xml
-          git commit -m "auto: update sitemap.xml" || exit 0
-          git push
+
+
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Auto update sitemap.xml"
+            git push
+          else
+            echo "Sitemap is already up to date."
+          fi
